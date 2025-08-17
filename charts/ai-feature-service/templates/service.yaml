@@ -1,0 +1,18 @@
+# Service: Pod 그룹에 대한 안정적인 네트워크 주소를 제공하는 리소스
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Release.Name }}-ai-feature-service
+spec:
+  # 이 Service가 어떤 Pod들에게 트래픽을 전달할지 선택. (위 Deployment의 Pod과 일치)
+  selector:
+    app: ai-feature-service
+  ports:
+    # #사용할 프로토콜
+    - protocol: TCP
+      # Service 자체가 노출하는 포트
+      port: 80
+      # Service가 트래픽을 전달할 최종 목적지인 Pod의 컨테이너 포트
+      targetPort: 8080
+  # ClusterIP: 클러스터 내부에서만 접근 가능한 IP를 할당
+  type: ClusterIP

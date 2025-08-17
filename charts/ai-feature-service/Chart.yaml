@@ -1,0 +1,11 @@
+# Helm API 버전
+apiVersion: v2
+# 디렉토리 이름과 일치시키는 것이 좋음
+name: ai-feature-service
+# 차트에 대한 설명
+description: AI Feature Service를 위한 Helm 차트
+# 차트의 종류. 'application'이 일반적
+type: application
+# 젠킨스가 이 버전을 자동으로 올리게 됨
+version: 0.1.0
+appVersion: "1.0.0"

@@ -1,0 +1,31 @@
+# 이 YAML 파일이 따르는 쿠버네티스 API의 버전을 지정
+apiVersion: apps/v1
+# 이 YAML 파일이 정의하는 리소스의 종류 (Deployment: 애플리케이션 배포)
+kind: Deployment
+# 이름, 레이블 등 이 리소스의 메타데이터를 정의
+metadata:
+  name: {{ .Release.Name }}-ai-feature-service
+spec:
+  # 이 애플리케이션을 몇 개의 복제본(Pod)으로 실행할지 지정
+  replicas: {{ .Values.replicaCount }}
+  # 이 Deployment가 어떤 Pod들을 관리할지 선택하는 규칙
+  selector:
+    matchLabels:
+      app: ai-feature-service
+  # 위 규칙에 따라 생성될 Pod의 설계도
+  template:
+    metadata:
+      labels:
+        app: ai-feature-service
+    # Pod의 상세 사양
+    spec:
+      containers:
+        # 컨테이너 이름
+        - name: ai-feature-service
+          # 이 컨테이너가 사용할 Docker 이미지 주소
+          # {{ .Values.image.repository }}:{{ .Values.image.tag }} 부분은 values.yaml 파일의 값으로 채워짐
+          # 바로 이 tag 값을 젠킨스가 계속해서 업데이트해주는 것
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          ports:
+            # 컨테이너가 노출하는 포트 번호
+            - containerPort: 8080

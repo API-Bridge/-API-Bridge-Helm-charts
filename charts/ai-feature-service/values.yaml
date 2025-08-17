@@ -1,0 +1,18 @@
+# 이 서비스를 몇 개의 복제본(Pod)으로 실행할지 지정
+replicaCount: 1
+
+# 배포할 Docker 이미지에 대한 정보
+image:
+  # 이미지가 저장된 저장소 주소. 젠킨스의 ECR_REGISTRY/ECR_REPOSITORY와 일치해야 함
+  repository: 123456789012.dkr.ecr.ap-northeast-2.amazonaws.com/ai-feature-service
+  # 쿠버네티스가 이미지를 어떻게 가져올지 정책을 정함. IfNotPresent는 로컬에 없으면 가져옵니다.
+  pullPolicy: IfNotPresent
+  # 이미지의 버전 태그. 이 값을 젠킨스가 매번 최신 커밋 해시로 자동으로 덮어쓰게 됨
+  tag: "latest"
+
+# 쿠버네티스 서비스(네트워크)에 대한 설정
+service:
+  # 서비스의 종류. ClusterIP는 클러스터 내부에서만 접근 가능한 주소를 만든다
+  type: ClusterIP
+  # 서비스가 외부에 노출할 포트 번호
+  port: 80
